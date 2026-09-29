@@ -1,0 +1,17 @@
+{
+  "name": "nabta-server",
+  "version": "1.0.0",
+  "description": "خادم متجر نَبْتة للزراعة المنزلية",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "nabta",
+    "ecommerce",
+    "agriculture"
+  ],
+  "license": "MIT"
+}
