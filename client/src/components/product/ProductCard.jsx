@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import ProductPlaceholder from "../common/ProductPlaceholder";
 import { formatPrice, getDiscountPercent } from "../../utils/formatPrice";
+import { useCart } from "../../hooks/useCart";
 import styles from "./ProductCard.module.css";
 
 // أيقونة تُختار حسب التصنيف — تعطي شكلاً بصريًا مميزًا لكل منتج
@@ -14,6 +15,10 @@ const CATEGORY_ICONS = {
 };
 
 export default function ProductCard({ product }) {
+  // الوصول للسلة — يجب أن يكون داخل المكون
+  const { addItem, getQuantity } = useCart();
+  const inCart = getQuantity(product.id);
+
   const discount = getDiscountPercent(product.price, product.oldPrice);
   const outOfStock = product.stock === 0;
 
@@ -52,11 +57,20 @@ export default function ProductCard({ product }) {
 
         <button
           type="button"
-          className={styles.addBtn}
+          className={`${styles.addBtn} ${inCart > 0 ? styles.addBtnActive : ""}`}
           disabled={outOfStock}
-          aria-label={`إضافة ${product.name} إلى السلة`}
+          onClick={() => addItem(product, 1)}
+          aria-label={
+            outOfStock
+              ? `${product.name} غير متوفر`
+              : `إضافة ${product.name} إلى السلة`
+          }
         >
-          {outOfStock ? "غير متوفر" : "أضف للسلة"}
+          {outOfStock
+            ? "غير متوفر"
+            : inCart > 0
+              ? `في السلة (${inCart}) ✓`
+              : "أضف للسلة"}
         </button>
       </div>
     </article>

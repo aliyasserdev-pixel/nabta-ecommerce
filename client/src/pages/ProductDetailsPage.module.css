@@ -103,6 +103,18 @@
   margin-bottom: var(--space-6);
 }
 
+.viewCart {
+  display: inline-block;
+  margin-top: var(--space-4);
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}
+
+.viewCart:hover {
+  text-decoration: underline;
+}
+
 @media (min-width: 768px) {
   .grid {
     grid-template-columns: 1fr 1fr;

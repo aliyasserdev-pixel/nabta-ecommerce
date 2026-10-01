@@ -98,3 +98,11 @@
   color: var(--color-text-muted);
   cursor: not-allowed;
 }
+
+.addBtnActive {
+  background-color: var(--color-success);
+}
+
+.addBtnActive:hover:not(:disabled) {
+  background-color: #15803d;
+}

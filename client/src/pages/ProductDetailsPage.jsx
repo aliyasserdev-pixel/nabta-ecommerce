@@ -8,6 +8,7 @@ import ProductGallery from "../components/product/ProductGallery";
 import ProductGrid from "../components/product/ProductGrid";
 import EmptyState from "../components/common/EmptyState";
 import { productService } from "../services/productService";
+import { useCart } from "../hooks/useCart";
 import { formatPrice, getDiscountPercent } from "../utils/formatPrice";
 import styles from "./ProductDetailsPage.module.css";
 
@@ -20,6 +21,10 @@ export default function ProductDetailsPage() {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [added, setAdded] = useState(false);
+
+  // الوصول للسلة
+  const { addItem, getQuantity } = useCart();
 
   useEffect(() => {
     let cancelled = false;
@@ -73,6 +78,7 @@ export default function ProductDetailsPage() {
 
   const discount = getDiscountPercent(product.price, product.oldPrice);
   const inStock = product.stock > 0;
+  const inCartQty = getQuantity(product.id);
 
   return (
     <>
@@ -131,15 +137,24 @@ export default function ProductDetailsPage() {
                 size="lg"
                 disabled={!inStock}
                 onClick={() => {
-                  // سيُفعَّل في المرحلة الخامسة
-                  alert(
-                    `سيتم إضافة ${quantity} من "${product.name}" للسلة (قريبًا)`,
-                  );
+                  addItem(product, quantity);
+                  setAdded(true);
+                  setTimeout(() => setAdded(false), 2000);
                 }}
               >
-                {inStock ? "أضف إلى السلة" : "نفد المخزون"}
+                {!inStock
+                  ? "نفد المخزون"
+                  : added
+                    ? "✓ تمت الإضافة"
+                    : "أضف إلى السلة"}
               </Button>
             </div>
+
+            {inCartQty > 0 && (
+              <Link to="/cart" className={styles.viewCart}>
+                عرض السلة ({inCartQty})
+              </Link>
+            )}
 
             <ul className={styles.meta}>
               <li>🚚 توصيل سريع</li>
