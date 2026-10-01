@@ -1,0 +1,33 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 800;
+  font-size: var(--fs-xl);
+  color: var(--color-primary-dark);
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-primary-soft);
+  border-radius: var(--radius-md);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.name {
+  letter-spacing: -0.5px;
+}
+
+/* نسخة للفوتر (فاتحة على خلفية داكنة) */
+.light {
+  color: var(--color-text-inverse);
+}
+
+.light .mark {
+  background-color: rgba(255, 255, 255, 0.15);
+}

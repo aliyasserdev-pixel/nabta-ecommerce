@@ -1,0 +1,71 @@
+/* متغيرات التصميم — ألوان، مسافات، خطوط، ظلال */
+
+:root {
+  /* ===== الألوان الأساسية (مستوحاة من الطبيعة) ===== */
+  --color-primary: #2d6a4f;          /* أخضر داكن — اللون الأساسي */
+  --color-primary-dark: #1b4332;     /* أخضر أغمق */
+  --color-primary-light: #40916c;    /* أخضر فاتح */
+  --color-primary-soft: #d8f3dc;     /* أخضر فاتح جدًا للخلفيات */
+
+  --color-accent: #e9c46a;           /* ذهبي ترابي — للتمييز */
+  --color-accent-dark: #d4a545;
+
+  /* ===== الألوان المحايدة ===== */
+  --color-text: #1f2937;             /* نص أساسي */
+  --color-text-muted: #6b7280;       /* نص ثانوي */
+  --color-text-inverse: #ffffff;     /* نص على خلفية داكنة */
+
+  --color-bg: #ffffff;               /* خلفية الصفحة */
+  --color-bg-alt: #f8f9fa;           /* خلفية بديلة */
+  --color-border: #e5e7eb;           /* لون الحدود */
+
+  /* ===== ألوان الحالة ===== */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-danger: #dc2626;
+  --color-info: #0284c7;
+
+  /* ===== الخطوط ===== */
+  --font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+
+  --fs-xs: 0.75rem;      /* 12px */
+  --fs-sm: 0.875rem;     /* 14px */
+  --fs-base: 1rem;       /* 16px */
+  --fs-lg: 1.125rem;     /* 18px */
+  --fs-xl: 1.25rem;      /* 20px */
+  --fs-2xl: 1.5rem;      /* 24px */
+  --fs-3xl: 1.875rem;    /* 30px */
+  --fs-4xl: 2.25rem;     /* 36px */
+
+  /* ===== المسافات ===== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ===== الحدود ===== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ===== الظلال ===== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+
+  /* ===== الأبعاد ===== */
+  --header-height: 64px;
+  --container-max: 1200px;
+
+  /* ===== الانتقالات ===== */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}

@@ -1,0 +1,33 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.center {
+  text-align: center;
+  align-items: center;
+}
+
+.right {
+  text-align: right;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: var(--fs-2xl);
+  color: var(--color-primary-dark);
+}
+
+.subtitle {
+  font-size: var(--fs-base);
+  color: var(--color-text-muted);
+  max-width: 600px;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: var(--fs-3xl);
+  }
+}

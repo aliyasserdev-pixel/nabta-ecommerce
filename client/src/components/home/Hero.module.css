@@ -1,0 +1,123 @@
+.hero {
+  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+  padding: var(--space-10) 0 var(--space-12);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.badge {
+  display: inline-block;
+  align-self: flex-start;
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+}
+
+.title {
+  font-size: var(--fs-3xl);
+  line-height: 1.25;
+  color: var(--color-primary-dark);
+  font-weight: 800;
+}
+
+.highlight {
+  color: var(--color-primary);
+  position: relative;
+  display: inline-block;
+}
+
+.subtitle {
+  font-size: var(--fs-lg);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 540px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+/* الجزء البصري */
+.visual {
+  position: relative;
+  min-height: 320px;
+  display: none;
+}
+
+.plantCard {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 240px;
+  height: 240px;
+  background-color: #ffffff;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  transform: rotate(-6deg);
+}
+
+.card2 {
+  width: 200px;
+  height: 200px;
+  transform: translate(70px, 60px) rotate(8deg);
+  background-color: var(--color-primary-soft);
+}
+
+.card3 {
+  width: 160px;
+  height: 160px;
+  transform: translate(-80px, -50px) rotate(-12deg);
+  background-color: #fef3c7;
+}
+
+.plantEmoji {
+  font-size: 6rem;
+  line-height: 1;
+}
+
+/* ===== Responsive ===== */
+@media (min-width: 768px) {
+  .hero {
+    padding: var(--space-16) 0;
+  }
+
+  .title {
+    font-size: var(--fs-4xl);
+  }
+
+  .inner {
+    grid-template-columns: 1.1fr 1fr;
+  }
+
+  .visual {
+    display: block;
+  }
+}
