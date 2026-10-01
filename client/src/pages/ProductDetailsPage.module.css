@@ -1,0 +1,119 @@
+.loading {
+  padding: var(--space-16) 0;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  padding: var(--space-6) 0;
+}
+
+.title {
+  font-size: var(--fs-2xl);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-3);
+}
+
+.rating {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.priceBlock {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.price {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+}
+
+.oldPrice {
+  font-size: var(--fs-base);
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.discountBadge {
+  background-color: var(--color-danger);
+  color: var(--color-text-inverse);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-full);
+}
+
+.stock {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.inStock {
+  color: var(--color-success);
+}
+
+.outStock {
+  color: var(--color-danger);
+}
+
+.description {
+  font-size: var(--fs-base);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: var(--space-6);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+}
+
+.related {
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border);
+}
+
+.relatedTitle {
+  font-size: var(--fs-xl);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .title {
+    font-size: var(--fs-3xl);
+  }
+
+  .meta {
+    flex-direction: row;
+    gap: var(--space-6);
+  }
+}

@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import Container from "../../common/Container";
 import Logo from "../../common/Logo";
 import MobileMenu from "./MobileMenu";
+import SearchModal from "../../common/SearchModal"; // ⬅️ سطر جديد
 import { ar } from "../../../locales/ar";
 import styles from "./Header.module.css";
 
@@ -17,6 +18,7 @@ const NAV_LINKS = [
 
 export default function Header() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setSearchOpen] = useState(false); // ⬅️ سطر جديد
 
   // إغلاق قائمة الموبايل عند تغيير المقاس للـ Desktop
   useEffect(() => {
@@ -82,7 +84,12 @@ export default function Header() {
 
         {/* الأزرار على اليسار */}
         <div className={styles.actions}>
-          <button className={styles.iconBtn} aria-label={ar.actions.search}>
+          {/* ⬇️ زر البحث — هذا اللي تغيّر */}
+          <button
+            className={styles.iconBtn}
+            aria-label={ar.actions.search}
+            onClick={() => setSearchOpen(true)}
+          >
             <svg
               width="20"
               height="20"
@@ -97,6 +104,7 @@ export default function Header() {
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
           </button>
+          {/* ⬆️ نهاية زر البحث */}
 
           <Link
             to="/login"
@@ -147,6 +155,9 @@ export default function Header() {
         onClose={() => setMobileMenuOpen(false)}
         links={NAV_LINKS}
       />
+
+      {/* ⬇️ نافذة البحث — هذا السطر الجديد */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }
