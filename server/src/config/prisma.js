@@ -1,16 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { env } from "./env.js";
 
-// نسخة واحدة من PrismaClient في كل التطبيق
-// (لتجنب فتح اتصالات كثيرة بقاعدة البيانات)
-
 const globalForPrisma = globalThis;
 
+// فعّل عرض SQL فقط لو DEBUG=true في .env
+const logLevels = env.isProduction
+  ? ["error"]
+  : process.env.DEBUG_SQL === "true"
+    ? ["query", "error", "warn"]
+    : ["error", "warn"];
+
 export const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    log: env.isProduction ? ["error"] : ["query", "error", "warn"],
-  });
+  globalForPrisma.prisma || new PrismaClient({ log: logLevels });
 
 if (!env.isProduction) {
   globalForPrisma.prisma = prisma;

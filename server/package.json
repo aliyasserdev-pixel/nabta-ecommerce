@@ -13,6 +13,9 @@
     "db:reset": "prisma migrate reset",
     "db:seed": "node prisma/seed.js"
   },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "keywords": [
     "nabta",
     "ecommerce",
@@ -21,6 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^6.19.3",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.22.3"
