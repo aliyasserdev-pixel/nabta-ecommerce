@@ -26,3 +26,7 @@ coverage/
 # ملفات Logs
 logs/
 *.log
+
+# ملفات النسخ الاحتياطي
+*.backup.*
+*.backup
