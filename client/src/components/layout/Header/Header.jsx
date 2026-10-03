@@ -3,11 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import Container from "../../common/Container";
 import Logo from "../../common/Logo";
 import MobileMenu from "./MobileMenu";
-import SearchModal from "../../common/SearchModal"; // ⬅️ سطر جديد
+import SearchModal from "../../common/SearchModal";
+import UserMenu from "../../auth/UserMenu";
+import { useAuth } from "../../../hooks/useAuth";
 import { ar } from "../../../locales/ar";
 import styles from "./Header.module.css";
 
-// روابط التنقل الرئيسية
 const NAV_LINKS = [
   { to: "/", label: ar.nav.home, exact: true },
   { to: "/products", label: ar.nav.shop },
@@ -18,7 +19,10 @@ const NAV_LINKS = [
 
 export default function Header() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setSearchOpen] = useState(false); // ⬅️ سطر جديد
+  const [isSearchOpen, setSearchOpen] = useState(false);
+
+  // ⬇️ هذا السطر كان ناقصًا
+  const { user } = useAuth();
 
   // إغلاق قائمة الموبايل عند تغيير المقاس للـ Desktop
   useEffect(() => {
@@ -31,7 +35,7 @@ export default function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobileMenuOpen]);
 
-  // منع التمرير في الصفحة عند فتح قائمة الموبايل
+  // منع التمرير عند فتح قائمة الموبايل
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
     return () => {
@@ -84,7 +88,7 @@ export default function Header() {
 
         {/* الأزرار على اليسار */}
         <div className={styles.actions}>
-          {/* ⬇️ زر البحث — هذا اللي تغيّر */}
+          {/* زر البحث */}
           <button
             className={styles.iconBtn}
             aria-label={ar.actions.search}
@@ -104,28 +108,33 @@ export default function Header() {
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
           </button>
-          {/* ⬆️ نهاية زر البحث */}
 
-          <Link
-            to="/login"
-            className={styles.iconBtn}
-            aria-label={ar.actions.account}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          {/* الحساب: UserMenu أو زر دخول */}
+          {user ? (
+            <UserMenu />
+          ) : (
+            <Link
+              to="/login"
+              className={styles.iconBtn}
+              aria-label={ar.actions.account}
             >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </Link>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </Link>
+          )}
 
+          {/* السلة */}
           <Link
             to="/cart"
             className={`${styles.iconBtn} ${styles.cartBtn}`}
@@ -156,7 +165,7 @@ export default function Header() {
         links={NAV_LINKS}
       />
 
-      {/* ⬇️ نافذة البحث — هذا السطر الجديد */}
+      {/* نافذة البحث */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
