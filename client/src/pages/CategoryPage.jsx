@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "../components/common/Container";
 import Breadcrumbs from "../components/product/Breadcrumbs";
@@ -7,7 +6,8 @@ import ProductFilters from "../components/product/ProductFilters";
 import Pagination from "../components/common/Pagination";
 import EmptyState from "../components/common/EmptyState";
 import { useProducts } from "../hooks/useProducts";
-import { categories } from "../data/categories";
+import { useEffect, useState } from "react";
+import { categoryService } from "../services/categoryService";
 import styles from "./CategoryPage.module.css";
 
 const PAGE_SIZE = 12;
@@ -17,7 +17,16 @@ export default function CategoryPage() {
   const [sort, setSort] = useState("default");
   const [page, setPage] = useState(1);
 
-  const category = categories.find((c) => c.slug === slug);
+ const [category, setCategory] = useState(null);
+ const [categoryLoading, setCategoryLoading] = useState(true);
+
+ useEffect(() => {
+   categoryService
+     .getBySlug(slug)
+     .then(setCategory)
+     .catch(() => setCategory(null))
+     .finally(() => setCategoryLoading(false));
+ }, [slug]);
 
   const { data, loading, error } = useProducts({
     categorySlug: slug,
@@ -25,6 +34,16 @@ export default function CategoryPage() {
     page,
     limit: PAGE_SIZE,
   });
+
+  if (categoryLoading) {
+    return (
+      <Container>
+        <p style={{ textAlign: "center", padding: "2rem" }}>
+          ⏳ جاري التحميل...
+        </p>
+      </Container>
+    );
+  }
 
   if (!category) {
     return (
