@@ -1,7 +1,3 @@
-// ==========================================
-// مخطط قاعدة بيانات متجر نَبْتة
-// ==========================================
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,16 +7,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ==========================================
-// المستخدمون والصلاحيات
-// ==========================================
-
+// ===== دور المستخدم =====
 enum UserRole {
-  CUSTOMER   // عميل
-  ASSISTANT  // مساعد إداري
-  ADMIN      // مدير
+  CUSTOMER
+  ASSISTANT
+  ADMIN
 }
 
+// ===== حالة الطلب =====
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+// ===== طريقة الدفع =====
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  BANK_TRANSFER
+  ONLINE
+}
+
+// ===== المستخدمون =====
 model User {
   id            String   @id @default(cuid())
   name          String
@@ -30,11 +41,9 @@ model User {
   role          UserRole @default(CUSTOMER)
   isActive      Boolean  @default(true)
 
-  // لإعادة تعيين كلمة المرور
   resetToken       String?
   resetTokenExpiry DateTime?
 
-  // العلاقات
   addresses Address[]
   orders    Order[]
   cart      Cart?
@@ -46,10 +55,7 @@ model User {
   @@index([role])
 }
 
-// ==========================================
-// عناوين الشحن
-// ==========================================
-
+// ===== العناوين =====
 model Address {
   id        String  @id @default(cuid())
   userId    String
@@ -70,10 +76,7 @@ model Address {
   @@index([userId])
 }
 
-// ==========================================
-// التصنيفات
-// ==========================================
-
+// ===== التصنيفات =====
 model Category {
   id          String  @id @default(cuid())
   slug        String  @unique
@@ -92,10 +95,7 @@ model Category {
   @@index([slug])
 }
 
-// ==========================================
-// المنتجات
-// ==========================================
-
+// ===== المنتجات =====
 model Product {
   id          String  @id @default(cuid())
   slug        String  @unique
@@ -126,10 +126,7 @@ model Product {
   @@index([isActive])
 }
 
-// ==========================================
-// صور المنتجات
-// ==========================================
-
+// ===== صور المنتجات =====
 model ProductImage {
   id        String  @id @default(cuid())
   productId String
@@ -144,10 +141,7 @@ model ProductImage {
   @@index([productId])
 }
 
-// ==========================================
-// السلة
-// ==========================================
-
+// ===== السلة =====
 model Cart {
   id     String @id @default(cuid())
   userId String @unique
@@ -175,25 +169,7 @@ model CartItem {
   @@index([cartId])
 }
 
-// ==========================================
-// الطلبات
-// ==========================================
-
-enum OrderStatus {
-  PENDING     // قيد المراجعة
-  CONFIRMED   // مؤكد
-  PROCESSING  // قيد التجهيز
-  SHIPPED     // تم الشحن
-  DELIVERED   // تم التوصيل
-  CANCELLED   // ملغى
-}
-
-enum PaymentMethod {
-  CASH_ON_DELIVERY  // الدفع عند الاستلام
-  BANK_TRANSFER     // تحويل بنكي
-  ONLINE            // دفع إلكتروني (مستقبلاً)
-}
-
+// ===== الطلبات =====
 model Order {
   id          String @id @default(cuid())
   orderNumber String @unique

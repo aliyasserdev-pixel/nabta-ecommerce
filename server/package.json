@@ -7,7 +7,11 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "postinstall": "prisma skills sync || exit 0"
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:generate": "prisma generate",
+    "db:reset": "prisma migrate reset",
+    "db:seed": "node prisma/seed.js"
   },
   "keywords": [
     "nabta",
@@ -16,9 +20,13 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "^6.19.3"
+    "@prisma/client": "^6.19.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3"
   },
   "devDependencies": {
+    "nodemon": "^3.1.14",
     "prisma": "^6.19.3"
   },
   "allowScripts": {
