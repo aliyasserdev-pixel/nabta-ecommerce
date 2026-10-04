@@ -1,12 +1,11 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
-// يحمي المسارات — يعيد التوجيه لصفحة الدخول إن لم يكن المستخدم مسجلًا
-export default function ProtectedRoute({ children, roles }) {
+export default function ProtectedRoute({ roles }) {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  // أثناء التحقق من المستخدم — لا نُعيد التوجيه بعد
+  // ما زال يتحقق من الجلسة
   if (loading) {
     return (
       <div style={{ padding: "3rem", textAlign: "center" }}>
@@ -15,12 +14,12 @@ export default function ProtectedRoute({ children, roles }) {
     );
   }
 
-  // غير مسجل → لصفحة الدخول
+  // غير مسجّل → نحوّل لصفحة الدخول
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // تحقق من الصلاحيات
+  // صلاحيات مطلوبة ولم تتحقق
   if (roles && roles.length > 0 && !roles.includes(user.role)) {
     return (
       <div style={{ padding: "3rem", textAlign: "center" }}>
@@ -29,5 +28,6 @@ export default function ProtectedRoute({ children, roles }) {
     );
   }
 
-  return children;
+  // ✅ الحل: نُعيد Outlet لعرض المسار الفرعي
+  return <Outlet />;
 }
