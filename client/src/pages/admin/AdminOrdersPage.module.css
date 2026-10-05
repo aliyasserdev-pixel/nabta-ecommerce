@@ -1,0 +1,172 @@
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-size: var(--fs-2xl);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-1);
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.search {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-base);
+  width: 100%;
+}
+
+.search:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tab {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  transition: all var(--transition-fast);
+}
+
+.tab:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.tabActive {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.tabActive:hover {
+  color: white;
+}
+
+.status,
+.error,
+.empty {
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.error {
+  color: var(--color-danger);
+}
+
+.table {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.tableHead {
+  display: none;
+}
+
+.tableRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.orderNum {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  font-size: var(--fs-sm);
+}
+
+.phone {
+  font-family: 'Courier New', monospace;
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.total {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.date {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.link {
+  color: var(--color-primary);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .filters {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .search {
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: var(--fs-3xl);
+  }
+
+  .tableHead {
+    display: grid;
+    grid-template-columns: 1.1fr 1.3fr 1fr 0.9fr 1fr 0.9fr 60px;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-bg-alt);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .tableRow {
+    display: grid;
+    grid-template-columns: 1.1fr 1.3fr 1fr 0.9fr 1fr 0.9fr 60px;
+    align-items: center;
+    gap: var(--space-3);
+    flex-direction: row;
+  }
+}

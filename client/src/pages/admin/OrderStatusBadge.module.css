@@ -1,0 +1,14 @@
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.warning { background-color: #fef3c7; color: #92400e; }
+.info    { background-color: #dbeafe; color: #1e40af; }
+.primary { background-color: #d1fae5; color: #065f46; }
+.success { background-color: #d1fae5; color: #065f46; }
+.danger  { background-color: #fee2e2; color: #991b1b; }
