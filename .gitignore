@@ -30,3 +30,6 @@ logs/
 # ملفات النسخ الاحتياطي
 *.backup.*
 *.backup
+
+client/.env
+client/.env.local

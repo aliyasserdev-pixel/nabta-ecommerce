@@ -10,14 +10,22 @@ const CATEGORY_ICONS = {
   pots: "🏺",
 };
 
-// معرض الصور — حاليًا صورة مؤقتة واحدة، وسيُطوَّر لدعم صور متعددة
 export default function ProductGallery({ product }) {
-  const icon = CATEGORY_ICONS[product.categorySlug] || "🌱";
+  const icon =
+    CATEGORY_ICONS[product.category?.slug || product.categorySlug] || "🌱";
 
   return (
     <div className={styles.gallery}>
       <div className={styles.main}>
-        <ProductPlaceholder icon={icon} label={product.name} />
+        {product.imageUrl ? (
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className={styles.image}
+          />
+        ) : (
+          <ProductPlaceholder icon={icon} label={product.name} />
+        )}
       </div>
     </div>
   );

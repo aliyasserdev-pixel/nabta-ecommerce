@@ -4,6 +4,7 @@ import Button from "../../components/common/Button";
 import { adminService } from "../../services/adminService";
 import { categoryService } from "../../services/categoryService";
 import styles from "./AdminProductFormPage.module.css";
+import ImageUploader from "../../components/admin/ImageUploader";
 
 export default function AdminProductFormPage() {
   const { id } = useParams();
@@ -11,18 +12,19 @@ export default function AdminProductFormPage() {
   const isEdit = Boolean(id);
 
   const [categories, setCategories] = useState([]);
-  const [form, setForm] = useState({
-    name: "",
-    slug: "",
-    description: "",
-    shortDesc: "",
-    price: 0,
-    oldPrice: "",
-    stock: 0,
-    categoryId: "",
-    isFeatured: false,
-    isActive: true,
-  });
+const [form, setForm] = useState({
+  name: "",
+  slug: "",
+  description: "",
+  shortDesc: "",
+  imageUrl: "", // ⬅️ جديد
+  price: 0,
+  oldPrice: "",
+  stock: 0,
+  categoryId: "",
+  isFeatured: false,
+  isActive: true,
+});
   const [loading, setLoading] = useState(isEdit);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -43,6 +45,7 @@ export default function AdminProductFormPage() {
               slug: product.slug,
               description: product.description || "",
               shortDesc: product.shortDesc || "",
+              imageUrl: product.imageUrl || "", // ⬅️ جديد
               price: product.price,
               oldPrice: product.oldPrice || "",
               stock: product.stock,
@@ -70,12 +73,13 @@ export default function AdminProductFormPage() {
     setSubmitting(true);
 
     try {
-      const payload = {
-        ...form,
-        price: Number(form.price),
-        oldPrice: form.oldPrice === "" ? null : Number(form.oldPrice),
-        stock: Number(form.stock),
-      };
+     const payload = {
+       ...form,
+       imageUrl: form.imageUrl || null, // ⬅️ جديد
+       price: Number(form.price),
+       oldPrice: form.oldPrice === "" ? null : Number(form.oldPrice),
+       stock: Number(form.stock),
+     };
 
       if (isEdit) {
         await adminService.updateProduct(id, payload);
@@ -186,6 +190,17 @@ export default function AdminProductFormPage() {
             value={form.shortDesc}
             onChange={handleChange}
             maxLength={200}
+          />
+        </div>
+
+        <div className={styles.field}>
+          <label>صورة المنتج</label>
+          <ImageUploader
+            currentUrl={form.imageUrl}
+            onUploaded={(url) =>
+              setForm((prev) => ({ ...prev, imageUrl: url || "" }))
+            }
+            disabled={submitting}
           />
         </div>
 

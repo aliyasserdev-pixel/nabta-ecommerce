@@ -35,10 +35,19 @@ export default function ProductCard({ product }) {
             نفد المخزون
           </span>
         )}
-        <ProductPlaceholder
-          icon={CATEGORY_ICONS[product.categorySlug] || "🌱"}
-          label={product.name}
-        />
+        {product.imageUrl ? (
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className={styles.productImage}
+            loading="lazy"
+          />
+        ) : (
+          <ProductPlaceholder
+            icon={CATEGORY_ICONS[product.categorySlug] || "🌱"}
+            label={product.name}
+          />
+        )}
       </Link>
 
       <div className={styles.body}>

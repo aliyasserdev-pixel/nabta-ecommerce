@@ -10,6 +10,9 @@ const requiredEnvVars = [
   "DATABASE_URL",
   "JWT_SECRET",
   "JWT_EXPIRES_IN",
+  "CLOUDINARY_CLOUD_NAME",
+  "CLOUDINARY_API_KEY",
+  "CLOUDINARY_API_SECRET",
 ];
 
 for (const key of requiredEnvVars) {
@@ -46,5 +49,10 @@ export const env = {
   cookie: {
     secure: process.env.COOKIE_SECURE === "true",
     sameSite: process.env.COOKIE_SAME_SITE || "lax",
+  },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
   },
 };

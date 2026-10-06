@@ -64,18 +64,19 @@ export function createProductSchema(body) {
 
 export function updateProductSchema(body) {
   // نفس التحقق لكن كل الحقول اختيارية (partial update)
-  const allowedFields = [
-    "name",
-    "slug",
-    "description",
-    "shortDesc",
-    "price",
-    "oldPrice",
-    "stock",
-    "categoryId",
-    "isFeatured",
-    "isActive",
-  ];
+const allowedFields = [
+  "name",
+  "slug",
+  "description",
+  "shortDesc",
+  "imageUrl",
+  "price",
+  "oldPrice",
+  "stock",
+  "categoryId",
+  "isFeatured",
+  "isActive",
+];
   const providedFields = Object.keys(body);
 
   if (providedFields.length === 0) {
