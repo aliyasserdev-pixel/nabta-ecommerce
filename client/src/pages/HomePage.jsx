@@ -6,16 +6,26 @@ import HomeGardenBanner from "../components/home/HomeGardenBanner";
 import BlogSection from "../components/home/BlogSection";
 import CTASection from "../components/home/CTASection";
 
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+
 export default function HomePage() {
-  return (
-    <>
-      <Hero />
-      <CategoriesSection />
-      <FeaturedProducts />
-      <WhyNabta />
-      <HomeGardenBanner />
-      <BlogSection />
-      <CTASection />
-    </>
+  useDocumentTitle(
+    '',
+    'نَبْتة — متجرك المتخصص في الزراعة المنزلية: شتول، بذور، تربة، أسمدة، وأدوات.'
   );
+    return (
+      <>
+        <Hero />
+        <CategoriesSection />
+        <FeaturedProducts />
+        <WhyNabta />
+        <HomeGardenBanner />
+        <BlogSection />
+        <CTASection />
+      </>
+    );
+
+
 }
+
+
