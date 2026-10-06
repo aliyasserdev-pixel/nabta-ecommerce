@@ -19,11 +19,25 @@ for (const key of requiredEnvVars) {
   }
 }
 
+const isProduction = process.env.NODE_ENV === "production";
+
+// ⚠️ تحقق أمني: JWT_SECRET يجب أن يكون قويًا في الإنتاج
+if (isProduction && process.env.JWT_SECRET.length < 32) {
+  console.error("❌ JWT_SECRET يجب أن يكون 32 حرفًا على الأقل في الإنتاج");
+  process.exit(1);
+}
+
+// ⚠️ تحقق أمني: يجب استخدام HTTPS cookies في الإنتاج
+if (isProduction && process.env.COOKIE_SECURE !== "true") {
+  console.error("❌ COOKIE_SECURE يجب أن يكون true في الإنتاج");
+  process.exit(1);
+}
+
 export const env = {
   port: Number(process.env.PORT),
   nodeEnv: process.env.NODE_ENV,
   clientUrl: process.env.CLIENT_URL,
-  isProduction: process.env.NODE_ENV === "production",
+  isProduction,
   databaseUrl: process.env.DATABASE_URL,
   jwt: {
     secret: process.env.JWT_SECRET,

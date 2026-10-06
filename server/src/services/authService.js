@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/ApiError.js";
+import { env } from "../config/env.js";
 
 export const authService = {
   // تسجيل حساب جديد
@@ -17,7 +18,10 @@ export const authService = {
     }
 
     // تشفير كلمة المرور
-    const passwordHash = await bcrypt.hash(password, 10);
+   // في الإنتاج: 12 rounds (أكثر أمانًا)
+// في التطوير: 10 rounds (أسرع)
+const SALT_ROUNDS = env.isProduction ? 12 : 10;
+const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
     // إنشاء المستخدم
     const user = await prisma.user.create({
