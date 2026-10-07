@@ -33,3 +33,8 @@ logs/
 
 client/.env
 client/.env.local
+
+# ملفات الإنتاج السرية
+seed.production.js
+*.production.js
+*.secrets.js
