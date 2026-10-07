@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import Container from "../components/common/Container";
 import Breadcrumbs from "../components/product/Breadcrumbs";
 import Button from "../components/common/Button";
@@ -23,6 +23,9 @@ const PAYMENT_LABELS = {
   ONLINE: "دفع إلكتروني",
 };
 
+// كامل التحديثات: كل 15 ثانية
+const POLL_INTERVAL = 15000;
+
 export default function OrderDetailsPage() {
   const { id } = useParams();
   const location = useLocation();
@@ -33,14 +36,41 @@ export default function OrderDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cancelling, setCancelling] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
 
+  // جلب الطلب
+  async function fetchOrder(silent = false) {
+    if (!silent) setLoading(true);
+
+    try {
+      const data = await orderService.getById(id);
+      setOrder(data);
+      setLastUpdated(new Date());
+      setError(null);
+    } catch (err) {
+      if (!silent) setError(err.message);
+    } finally {
+      if (!silent) setLoading(false);
+    }
+  }
+
+  // التحميل الأولي
   useEffect(() => {
-    orderService
-      .getById(id)
-      .then(setOrder)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    fetchOrder();
   }, [id]);
+
+  // Polling — تحديث دوري
+  useEffect(() => {
+    // لا نُحدّث لو الطلب ملغى أو تم التوصيل (نهائي)
+    if (!order) return;
+    if (order.status === "CANCELLED" || order.status === "DELIVERED") return;
+
+    const interval = setInterval(() => {
+      fetchOrder(true); // silent — بدون loading
+    }, POLL_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [order?.status, id]);
 
   async function handleCancel() {
     if (!window.confirm("هل تريد إلغاء هذا الطلب؟")) return;
@@ -79,6 +109,8 @@ export default function OrderDetailsPage() {
   }
 
   const canCancel = order.status === "PENDING" || order.status === "CONFIRMED";
+  const isTracking =
+    order.status !== "CANCELLED" && order.status !== "DELIVERED";
 
   return (
     <Container>
@@ -109,6 +141,17 @@ export default function OrderDetailsPage() {
           {STATUS_LABELS[order.status]}
         </span>
       </header>
+
+      {isTracking && (
+        <div className={styles.tracking}>
+          🔄 جاري متابعة حالة الطلب تلقائيًا...
+          {lastUpdated && (
+            <span className={styles.lastUpdated}>
+              آخر تحديث: {lastUpdated.toLocaleTimeString("ar-SD")}
+            </span>
+          )}
+        </div>
+      )}
 
       <div className={styles.grid}>
         {/* المنتجات */}
