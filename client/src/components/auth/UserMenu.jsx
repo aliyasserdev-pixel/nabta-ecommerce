@@ -61,23 +61,14 @@ export default function UserMenu() {
             📦 طلباتي
           </Link>
 
-          {user.role === "ADMIN" && (
+          {/* لوحة التحكم — للـ Admin والـ Assistant */}
+          {(user.role === "ADMIN" || user.role === "ASSISTANT") && (
             <Link
               to="/admin"
               className={styles.item}
               onClick={() => setOpen(false)}
             >
               ⚙️ لوحة التحكم
-            </Link>
-          )}
-
-          {user.role === "ASSISTANT" && (
-            <Link
-              to="/assistant"
-              className={styles.item}
-              onClick={() => setOpen(false)}
-            >
-              🛡️ لوحة المساعد
             </Link>
           )}
 
