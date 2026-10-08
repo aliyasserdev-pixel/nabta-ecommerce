@@ -1,9 +1,9 @@
 .header {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-5);
 }
 
 .title {
-  font-size: var(--fs-2xl);
+  font-size: var(--fs-xl);
   color: var(--color-primary-dark);
   margin-bottom: var(--space-1);
 }
@@ -34,6 +34,7 @@
   border-color: var(--color-primary);
 }
 
+/* ===== الفلاتر (Tabs) ===== */
 .tabs {
   display: flex;
   flex-wrap: wrap;
@@ -49,6 +50,8 @@
   border: 1px solid var(--color-border);
   color: var(--color-text-muted);
   transition: all var(--transition-fast);
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .tab:hover {
@@ -78,6 +81,7 @@
   color: var(--color-danger);
 }
 
+/* ===== الجدول ===== */
 .table {
   background-color: var(--color-bg);
   border: 1px solid var(--color-border);
@@ -106,12 +110,15 @@
   font-weight: 700;
   color: var(--color-primary-dark);
   font-size: var(--fs-sm);
+  word-break: break-all;
 }
 
 .phone {
   font-family: 'Courier New', monospace;
   color: var(--color-text-muted);
   font-size: var(--fs-sm);
+  direction: ltr;
+  text-align: right;
 }
 
 .total {
@@ -128,13 +135,19 @@
   color: var(--color-primary);
   font-size: var(--fs-sm);
   font-weight: 600;
+  align-self: flex-start;
 }
 
 .link:hover {
   text-decoration: underline;
 }
 
-@media (min-width: 768px) {
+/* ===== Tablet ===== */
+@media (min-width: 640px) {
+  .title {
+    font-size: var(--fs-2xl);
+  }
+
   .filters {
     flex-direction: row;
     align-items: center;
@@ -145,6 +158,7 @@
   }
 }
 
+/* ===== Desktop ===== */
 @media (min-width: 1024px) {
   .title {
     font-size: var(--fs-3xl);
@@ -168,5 +182,10 @@
     align-items: center;
     gap: var(--space-3);
     flex-direction: row;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .link {
+    align-self: center;
   }
 }
