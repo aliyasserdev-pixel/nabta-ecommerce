@@ -1,10 +1,13 @@
+/* ============================================
+   Overlay (الخلفية المعتمة)
+   ============================================ */
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
-  transition: all var(--transition-base);
+  transition: opacity var(--transition-base), visibility var(--transition-base);
   z-index: 90;
 }
 
@@ -13,49 +16,74 @@
   visibility: visible;
 }
 
+/* ============================================
+   Sidebar (القائمة الجانبية)
+   ============================================ */
 .sidebar {
   position: fixed;
   top: 0;
-  inset-inline-start: 0;
   bottom: 0;
-  width: 260px;
+  /* ⚠️ في RTL: القائمة من اليمين */
+  inset-inline-start: 0;
+  width: 280px;
+  max-width: 85vw;
   background-color: var(--color-primary-dark);
   color: var(--color-text-inverse);
   display: flex;
   flex-direction: column;
+  /* ⚠️ مخفية افتراضيًا */
   transform: translateX(-100%);
   transition: transform var(--transition-base);
   z-index: 100;
+  overflow-y: auto;
 }
 
+/* ⚠️ مهم: تُفتح في RTL */
 .sidebar.open {
   transform: translateX(0);
 }
 
+/* ============================================
+   Header (رأس القائمة)
+   ============================================ */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-5);
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
 }
 
 .brand {
-  font-size: var(--fs-lg);
+  font-size: var(--fs-base);
   font-weight: 800;
+  color: white;
+  white-space: nowrap;
 }
 
 .closeBtn {
   color: white;
   font-size: var(--fs-lg);
   padding: var(--space-2);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+  flex-shrink: 0;
 }
 
+.closeBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   Navigation (التنقل)
+   ============================================ */
 .nav {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: var(--space-4) var(--space-3);
+  padding: var(--space-3);
   gap: var(--space-1);
   overflow-y: auto;
 }
@@ -70,6 +98,7 @@
   font-weight: 600;
   color: rgba(255, 255, 255, 0.75);
   transition: all var(--transition-fast);
+  text-align: right;
 }
 
 .link:hover {
@@ -85,16 +114,22 @@
 .icon {
   font-size: 1.25rem;
   line-height: 1;
+  flex-shrink: 0;
 }
 
+/* ============================================
+   Footer (أسفل القائمة)
+   ============================================ */
 .footer {
-  padding: var(--space-5);
+  padding: var(--space-4) var(--space-5);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
 }
 
 .userName {
   font-weight: 700;
   color: white;
+  font-size: var(--fs-sm);
 }
 
 .userRole {
@@ -103,9 +138,20 @@
   margin-top: 2px;
 }
 
+/* ============================================
+   Desktop (1024px+)
+   - Sidebar دائم مفتوحة
+   - لا Overlay
+   - لا Close button
+   ============================================ */
 @media (min-width: 1024px) {
   .sidebar {
+    /* ⚠️ في Desktop: تُفتح دائمًا */
     transform: translateX(0);
+    width: 260px;
+    /* ⚠️ RTL: تبقى على اليمين */
+    inset-inline-start: 0;
+    z-index: 40;
   }
 
   .closeBtn {
