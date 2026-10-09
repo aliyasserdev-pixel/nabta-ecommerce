@@ -122,10 +122,21 @@ export default function ProductDetailsPage() {
               )}
             </div>
 
-            <p className={styles.description}>
-              منتج عالي الجودة من نَبْتة — مناسب للزراعة المنزلية. (الوصف الكامل
-              سيُضاف عند ربط قاعدة البيانات.)
-            </p>
+            {/* الوصف */}
+            <section className={styles.descriptionSection}>
+              <h2 className={styles.descriptionTitle}>وصف المنتج</h2>
+
+              {product.description ? (
+                <div
+                  className={styles.descriptionContent}
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                />
+              ) : (
+                <p className={styles.descriptionEmpty}>
+                  لا يوجد وصف لهذا المنتج حاليًا.
+                </p>
+              )}
+            </section>
 
             <div className={styles.actions}>
               <QuantitySelector

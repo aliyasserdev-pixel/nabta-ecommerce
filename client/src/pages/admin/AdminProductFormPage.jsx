@@ -12,19 +12,19 @@ export default function AdminProductFormPage() {
   const isEdit = Boolean(id);
 
   const [categories, setCategories] = useState([]);
-const [form, setForm] = useState({
-  name: "",
-  slug: "",
-  description: "",
-  shortDesc: "",
-  imageUrl: "", // ⬅️ جديد
-  price: 0,
-  oldPrice: "",
-  stock: 0,
-  categoryId: "",
-  isFeatured: false,
-  isActive: true,
-});
+  const [form, setForm] = useState({
+    name: "",
+    slug: "",
+    description: "",
+    shortDesc: "",
+    imageUrl: "", // ⬅️ جديد
+    price: 0,
+    oldPrice: "",
+    stock: 0,
+    categoryId: "",
+    isFeatured: false,
+    isActive: true,
+  });
   const [loading, setLoading] = useState(isEdit);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -73,13 +73,13 @@ const [form, setForm] = useState({
     setSubmitting(true);
 
     try {
-     const payload = {
-       ...form,
-       imageUrl: form.imageUrl || null, // ⬅️ جديد
-       price: Number(form.price),
-       oldPrice: form.oldPrice === "" ? null : Number(form.oldPrice),
-       stock: Number(form.stock),
-     };
+      const payload = {
+        ...form,
+        imageUrl: form.imageUrl || null, // ⬅️ جديد
+        price: Number(form.price),
+        oldPrice: form.oldPrice === "" ? null : Number(form.oldPrice),
+        stock: Number(form.stock),
+      };
 
       if (isEdit) {
         await adminService.updateProduct(id, payload);
@@ -205,13 +205,23 @@ const [form, setForm] = useState({
         </div>
 
         <div className={styles.field}>
-          <label>الوصف الكامل</label>
+          <label>
+            الوصف الكامل
+            <span className={styles.hint}>
+              (يمكن استخدام HTML: &lt;h2&gt;، &lt;ul&gt;، &lt;li&gt;،
+              &lt;strong&gt;)
+            </span>
+          </label>
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
-            rows={5}
-            maxLength={2000}
+            rows={12}
+            placeholder="<h2>النبات</h2>
+<ul>
+  <li>نبات قوي</li>
+  <li>إنتاج مستمر</li>
+</ul>"
           />
         </div>
 

@@ -115,6 +115,96 @@
   text-decoration: underline;
 }
 
+/* ============================================
+   قسم الوصف
+   ============================================ */
+.descriptionSection {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.descriptionTitle {
+  font-size: var(--fs-xl);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--color-primary-soft);
+}
+
+.descriptionContent {
+  font-size: var(--fs-base);
+  line-height: 1.8;
+  color: var(--color-text);
+}
+
+/* ⚠️ تنسيق الوصف المُدخل من Admin */
+.descriptionContent h2 {
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: var(--space-6) 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.descriptionContent h2:first-child {
+  margin-top: 0;
+}
+
+.descriptionContent h3 {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.descriptionContent p {
+  margin-bottom: var(--space-3);
+}
+
+.descriptionContent ul {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-3) 0;
+}
+
+.descriptionContent li {
+  position: relative;
+  padding-inline-start: var(--space-6);
+  margin-bottom: var(--space-2);
+  line-height: 1.7;
+}
+
+.descriptionContent li::before {
+  content: '•';
+  position: absolute;
+  inset-inline-start: var(--space-3);
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.descriptionContent strong {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+.descriptionContent em {
+  color: var(--color-text-muted);
+  font-style: normal;
+}
+
+.descriptionEmpty {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-8);
+  background-color: var(--color-bg-alt);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+}
+
 @media (min-width: 768px) {
   .grid {
     grid-template-columns: 1fr 1fr;
