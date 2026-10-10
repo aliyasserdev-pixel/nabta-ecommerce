@@ -126,7 +126,7 @@ export default function AdminProductFormPage() {
             onChange={handleChange}
             required
             dir="ltr"
-            pattern="[a-z0-9-]+"
+            pattern="[a-z0-9/-]+"
           />
         </div>
 
