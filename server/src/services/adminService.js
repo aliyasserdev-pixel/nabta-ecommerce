@@ -242,26 +242,47 @@ export const adminService = {
     });
   },
 
-  async deleteProduct(productId) {
-    const product = await prisma.product.findUnique({
+async deleteProduct(productId) {
+  // 1. تحقق من وجود المنتج
+  const product = await prisma.product.findUnique({
+    where: { id: productId },
+  });
+
+  if (!product) {
+    throw ApiError.notFound("المنتج غير موجود");
+  }
+
+  // 2. افحص إذا كان المنتج مرتبطًا بأي طلبات (حتى الملغاة)
+  const orderItemsCount = await prisma.orderItem.count({
+    where: { productId },
+  });
+
+  // 3. لو مرتبط بطلبات → عطّل بدل الحذف
+  if (orderItemsCount > 0) {
+    const updated = await prisma.product.update({
       where: { id: productId },
+      data: { isActive: false },
     });
-    if (!product) throw ApiError.notFound("المنتج غير موجود");
 
-    // تحقق: هل المنتج في طلبات؟
-    const inOrders = await prisma.orderItem.count({ where: { productId } });
-    if (inOrders > 0) {
-      // بدلًا من الحذف: نُلغيه
-      return prisma.product.update({
-        where: { id: productId },
-        data: { isActive: false },
-      });
-    }
+    return {
+      deleted: false,
+      deactivated: true,
+      message: `المنتج مرتبط بـ ${orderItemsCount} طلب — تم تعطيله بدل حذفه`,
+      product: updated,
+    };
+  }
 
-    // لا يوجد في طلبات — نحذف نهائيًا
-    await prisma.product.delete({ where: { id: productId } });
-    return { deleted: true };
-  },
+  // 4. لو غير مرتبط → احذف نهائيًا
+  await prisma.product.delete({
+    where: { id: productId },
+  });
+
+  return {
+    deleted: true,
+    deactivated: false,
+    message: "تم حذف المنتج نهائيًا",
+  };
+}
 
   // ============ المستخدمين (Admin فقط) ============
   async getUsers({ role, search, page = 1, limit = 20 } = {}) {
