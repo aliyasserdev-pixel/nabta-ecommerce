@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { prisma } from "../config/prisma.js";
 import { ApiError } from "../utils/ApiError.js";
 
@@ -198,6 +199,7 @@ export const adminService = {
         slug: data.slug.trim(),
         description: data.description?.trim() || null,
         shortDesc: data.shortDesc?.trim() || null,
+        imageUrl: data.imageUrl?.trim() || null,
         price: data.price,
         oldPrice: data.oldPrice ?? null,
         stock: data.stock,
@@ -242,49 +244,43 @@ export const adminService = {
     });
   },
 
-async deleteProduct(productId) {
-  // 1. تحقق من وجود المنتج
-  const product = await prisma.product.findUnique({
-    where: { id: productId },
-  });
-
-  if (!product) {
-    throw ApiError.notFound("المنتج غير موجود");
-  }
-
-  // 2. افحص إذا كان المنتج مرتبطًا بأي طلبات (حتى الملغاة)
-  const orderItemsCount = await prisma.orderItem.count({
-    where: { productId },
-  });
-
-  // 3. لو مرتبط بطلبات → عطّل بدل الحذف
-  if (orderItemsCount > 0) {
-    const updated = await prisma.product.update({
+  async deleteProduct(productId) {
+    const product = await prisma.product.findUnique({
       where: { id: productId },
-      data: { isActive: false },
+    });
+    if (!product) throw ApiError.notFound("المنتج غير موجود");
+
+    // تحقق: هل المنتج في طلبات؟
+    const orderItemsCount = await prisma.orderItem.count({
+      where: { productId },
     });
 
+    if (orderItemsCount > 0) {
+      // ⚠️ لا نحذف — نُعطّل فقط
+      const updated = await prisma.product.update({
+        where: { id: productId },
+        data: { isActive: false },
+      });
+
+      return {
+        deleted: false,
+        deactivated: true,
+        message: `المنتج مرتبط بـ ${orderItemsCount} طلب — تم تعطيله بدلاً من حذفه`,
+        product: updated,
+      };
+    }
+
+    // لا يوجد في طلبات — نحذف نهائيًا
+    await prisma.product.delete({ where: { id: productId } });
+
     return {
-      deleted: false,
-      deactivated: true,
-      message: `المنتج مرتبط بـ ${orderItemsCount} طلب — تم تعطيله بدل حذفه`,
-      product: updated,
+      deleted: true,
+      deactivated: false,
+      message: "تم حذف المنتج نهائيًا",
     };
-  }
+  },
 
-  // 4. لو غير مرتبط → احذف نهائيًا
-  await prisma.product.delete({
-    where: { id: productId },
-  });
-
-  return {
-    deleted: true,
-    deactivated: false,
-    message: "تم حذف المنتج نهائيًا",
-  };
-}
-
-  // ============ المستخدمين (Admin فقط) ============
+  // ============ المستخدمين ============
   async getUsers({ role, search, page = 1, limit = 20 } = {}) {
     const where = {};
 
@@ -330,7 +326,8 @@ async deleteProduct(productId) {
     };
   },
 
-  async createStaffUser(data, currentAdminId) {
+  // ============ إنشاء مستخدم (أي دور) ============
+  async createStaffUser(data) {
     const normalizedEmail = data.email.trim().toLowerCase();
 
     const existing = await prisma.user.findUnique({
@@ -338,8 +335,14 @@ async deleteProduct(productId) {
     });
     if (existing) throw ApiError.conflict("البريد مستخدم مسبقًا");
 
-    const bcrypt = (await import("bcryptjs")).default;
-    const passwordHash = await bcrypt.hash(data.password, 12);
+    // ⚠️ السمان: 12 في الإنتاج، 10 في التطوير
+    const rounds = process.env.NODE_ENV === "production" ? 12 : 10;
+    const passwordHash = await bcrypt.hash(data.password, rounds);
+
+    // ⚠️ الأدوار المسموحة
+    const validRoles = ["ADMIN", "ASSISTANT", "CUSTOMER"];
+    const role =
+      data.role && validRoles.includes(data.role) ? data.role : "CUSTOMER";
 
     return prisma.user.create({
       data: {
@@ -347,7 +350,7 @@ async deleteProduct(productId) {
         email: normalizedEmail,
         phone: data.phone?.trim() || null,
         passwordHash,
-        role: data.role || "ASSISTANT",
+        role,
       },
       select: {
         id: true,
@@ -359,6 +362,94 @@ async deleteProduct(productId) {
         createdAt: true,
       },
     });
+  },
+
+  // ============ تعديل بيانات المستخدم ============
+  async updateUser(userId, data) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw ApiError.notFound("المستخدم غير موجود");
+
+    // البناء للبيانات المسموحة فقط
+    const allowedData = {};
+
+    if (data.name !== undefined) {
+      if (typeof data.name !== "string" || data.name.trim().length < 2) {
+        throw ApiError.badRequest("الاسم غير صحيح");
+      }
+      allowedData.name = data.name.trim();
+    }
+
+    if (data.email !== undefined) {
+      const normalizedEmail = data.email.trim().toLowerCase();
+
+      // تحقق أن البريد غير مستخدم من قبل شخص آخر
+      if (normalizedEmail !== user.email) {
+        const existing = await prisma.user.findUnique({
+          where: { email: normalizedEmail },
+        });
+        if (existing) throw ApiError.conflict("البريد مستخدم مسبقًا");
+      }
+
+      allowedData.email = normalizedEmail;
+    }
+
+    if (data.phone !== undefined) {
+      allowedData.phone = data.phone?.trim() || null;
+    }
+
+    if (data.role !== undefined) {
+      const validRoles = ["ADMIN", "ASSISTANT", "CUSTOMER"];
+      if (!validRoles.includes(data.role)) {
+        throw ApiError.badRequest("الدور غير صحيح");
+      }
+      allowedData.role = data.role;
+    }
+
+    if (Object.keys(allowedData).length === 0) {
+      throw ApiError.badRequest("لا توجد بيانات للتحديث");
+    }
+
+    return prisma.user.update({
+      where: { id: userId },
+      data: allowedData,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        role: true,
+        isActive: true,
+        createdAt: true,
+      },
+    });
+  },
+
+  // ============ تغيير كلمة المرور ============
+  async updateUserPassword(userId, newPassword) {
+    if (!newPassword || typeof newPassword !== "string") {
+      throw ApiError.badRequest("كلمة المرور مطلوبة");
+    }
+
+    if (newPassword.length < 8) {
+      throw ApiError.badRequest("كلمة المرور يجب أن تكون 8 أحرف على الأقل");
+    }
+
+    if (newPassword.length > 72) {
+      throw ApiError.badRequest("كلمة المرور طويلة جدًا");
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw ApiError.notFound("المستخدم غير موجود");
+
+    const rounds = process.env.NODE_ENV === "production" ? 12 : 10;
+    const passwordHash = await bcrypt.hash(newPassword, rounds);
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { passwordHash },
+    });
+
+    return { success: true, message: "تم تحديث كلمة المرور" };
   },
 
   async updateUserRole(userId, newRole, currentAdminId) {
@@ -401,5 +492,43 @@ async deleteProduct(productId) {
         isActive: true,
       },
     });
+  },
+
+  // ============ حذف مستخدم ============
+  async deleteUser(userId, currentAdminId) {
+    if (userId === currentAdminId) {
+      throw ApiError.badRequest("لا يمكنك حذف حسابك بنفسك");
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw ApiError.notFound("المستخدم غير موجود");
+
+    // ⚠️ تحقق: هل المستخدم في طلبات؟
+    const orderCount = await prisma.order.count({
+      where: { userId },
+    });
+
+    if (orderCount > 0) {
+      // عطّل بدل الحذف
+      await prisma.user.update({
+        where: { id: userId },
+        data: { isActive: false },
+      });
+
+      return {
+        deleted: false,
+        deactivated: true,
+        message: `المستخدم لديه ${orderCount} طلب — تم تعطيله بدلاً من حذفه`,
+      };
+    }
+
+    // احذف نهائيًا
+    await prisma.user.delete({ where: { id: userId } });
+
+    return {
+      deleted: true,
+      deactivated: false,
+      message: "تم حذف المستخدم نهائيًا",
+    };
   },
 };
