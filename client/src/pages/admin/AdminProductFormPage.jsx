@@ -17,7 +17,7 @@ export default function AdminProductFormPage() {
     slug: "",
     description: "",
     shortDesc: "",
-    imageUrl: "", // ⬅️ جديد
+    imageUrl: "",
     price: 0,
     oldPrice: "",
     stock: 0,
@@ -45,7 +45,7 @@ export default function AdminProductFormPage() {
               slug: product.slug,
               description: product.description || "",
               shortDesc: product.shortDesc || "",
-              imageUrl: product.imageUrl || "", // ⬅️ جديد
+              imageUrl: product.imageUrl || "",
               price: product.price,
               oldPrice: product.oldPrice || "",
               stock: product.stock,
@@ -67,15 +67,49 @@ export default function AdminProductFormPage() {
     }));
   }
 
+  // ⚠️ توليد slug تلقائيًا من الاسم (اختياري)
+  function generateSlug() {
+    const slug = form.name
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "") // احذف الرموز
+      .replace(/\s+/g, "-") // استبدل المسافات بـ -
+      .replace(/-+/g, "-"); // احذف الشرطات المتكررة
+
+    setForm((prev) => ({ ...prev, slug }));
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
+
+    // ⚠️ تحقق من الـ slug
+    if (!form.slug || !/^[a-z0-9-]+$/.test(form.slug)) {
+      setError(
+        "الـ slug يجب أن يحتوي فقط على: أحرف إنجليزية صغيرة، أرقام، وشرطات (-). مثال: tomato-seeds",
+      );
+      return;
+    }
+
+    // ⚠️ تحقق من السعر
+    if (Number(form.price) <= 0) {
+      setError("السعر يجب أن يكون أكبر من 0");
+      return;
+    }
+
+    // ⚠️ تحقق من المخزون
+    if (Number(form.stock) < 0) {
+      setError("المخزون لا يمكن أن يكون سالبًا");
+      return;
+    }
+
     setSubmitting(true);
 
     try {
       const payload = {
         ...form,
-        imageUrl: form.imageUrl || null, // ⬅️ جديد
+        slug: form.slug.trim().toLowerCase(),
+        imageUrl: form.imageUrl || null,
         price: Number(form.price),
         oldPrice: form.oldPrice === "" ? null : Number(form.oldPrice),
         stock: Number(form.stock),
@@ -115,19 +149,35 @@ export default function AdminProductFormPage() {
             onChange={handleChange}
             required
             minLength={2}
+            maxLength={200}
           />
         </div>
 
         <div className={styles.field}>
-          <label>الـ slug * (إنجليزي فقط، أحرف صغيرة وشرطات)</label>
-          <input
-            name="slug"
-            value={form.slug}
-            onChange={handleChange}
-            required
-            dir="ltr"
-            pattern="[a-z0-9/-]+"
-          />
+          <label>
+            الـ slug *
+            <span className={styles.hint}>
+              (إنجليزي فقط: أحرف صغيرة، أرقام، شرطات)
+            </span>
+          </label>
+          <div className={styles.slugRow}>
+            <input
+              name="slug"
+              value={form.slug}
+              onChange={handleChange}
+              required
+              dir="ltr"
+              placeholder="tomato-seeds"
+            />
+            <button
+              type="button"
+              className={styles.generateBtn}
+              onClick={generateSlug}
+              disabled={!form.name}
+            >
+              توليد تلقائي
+            </button>
+          </div>
         </div>
 
         <div className={styles.field}>
@@ -157,6 +207,7 @@ export default function AdminProductFormPage() {
               onChange={handleChange}
               required
               min="0"
+              step="1"
             />
           </div>
           <div className={styles.field}>
@@ -167,6 +218,7 @@ export default function AdminProductFormPage() {
               value={form.oldPrice}
               onChange={handleChange}
               min="0"
+              step="1"
               placeholder="اتركه فارغًا"
             />
           </div>
@@ -179,6 +231,7 @@ export default function AdminProductFormPage() {
               onChange={handleChange}
               required
               min="0"
+              step="1"
             />
           </div>
         </div>
