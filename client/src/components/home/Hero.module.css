@@ -1,12 +1,17 @@
+/* ============================================
+   Hero Section - الاحترافي
+   ============================================ */
+
 .hero {
   background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
-  padding: var(--space-10) 0 var(--space-12);
+  padding: var(--space-8) 0 var(--space-12);
+  overflow: hidden;
 }
 
 .inner {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-10);
+  gap: var(--space-8);
   align-items: center;
 }
 
@@ -16,19 +21,36 @@
   gap: var(--space-5);
 }
 
+/* ============================================
+   Badge (الشريط العلوي)
+   ============================================ */
+
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
+  align-self: flex-start;
+  padding: 6px 14px 6px 6px;
+  background-color: var(--color-primary-soft);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  white-space: nowrap;
 }
 
 .badgeIcon {
-  width: 50px;
-  height: 50px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  border: none;
+  object-fit: cover;
+  background: white;
   flex-shrink: 0;
 }
+
+/* ============================================
+   العنوان
+   ============================================ */
 
 .title {
   font-size: var(--fs-3xl);
@@ -44,139 +66,239 @@
 }
 
 .subtitle {
-  font-size: var(--fs-lg);
+  font-size: var(--fs-base);
   color: var(--color-text-muted);
   line-height: 1.7;
   max-width: 540px;
 }
 
+/* ============================================
+   الأزرار
+   ============================================ */
+
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+  margin-top: var(--space-2);
 }
 
-/* القائمة: العناصر جنب بعض ومتوسطة */
+/* ============================================
+   الميزات (3 ميزات بأيقونات)
+   ============================================ */
+
 .features {
-  list-style: none;
-  padding: 0;
-  margin: 24px 0;          /* مسافة فوق وتحت */
-  display: inline-flex;    /* يخلي العرض على قد المحتوى */
-  gap: 40px;
+  display: flex;
   flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
 }
-/* كل عنصر: أيقونة فوق ونص تحت، ومتوسط */
+
 .featureItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #555;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
   text-align: center;
+  transition: transform var(--transition-fast);
 }
 
-/* الأيقونة: لون ومقاس ثابت */
+.featureItem:hover {
+  transform: translateY(-2px);
+  color: var(--color-primary-dark);
+}
+
 .featureIcon {
-  color: #2e7d32;
+  color: var(--color-primary);
   flex-shrink: 0;
-  stroke-width: 1.8; /* لو حابب تخليها أرفع شوية زي الصورة */
 }
 
-/* الجزء البصري */
+/* ============================================
+   الجزء البصري (3D Cards)
+   ============================================ */
+
 .visual {
   position: relative;
-  min-height: 450px;
-  display: none;
+  min-height: 380px;
+  display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
+  max-width: 400px;
+  width: 100%;
 }
 
-/* =========================================
-   الجزء البصري (تحديث احترافي - 3D Style)
-========================================= */
-
-/* الكروت الزجاجية اللي في الخلف */
+/* الكروت الزجاجية الخلفية */
 .glassCard {
   position: absolute;
-  background: rgba(255, 255, 255, 0.6); /* أبيض شفاف */
-  backdrop-filter: blur(12px); 
-  /* السر هنا: الإطار الملون اللي بيدي إحساس إنه كارت شفاف */
-  border: 2px solid rgba(255, 255, 255, 0.9); 
-  border-radius: 40px; 
-  box-shadow: 
-    0 20px 40px rgba(46, 125, 50, 0.08), /* ظل أخضر خفيف جداً */
-    inset 0 0 0 1px rgba(46, 125, 50, 0.1); /* إطار داخلي أخضر باهت */
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 32px;
+  box-shadow:
+    0 20px 40px rgba(46, 125, 50, 0.08),
+    inset 0 0 0 1px rgba(46, 125, 50, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-base);
 }
 
-/* كارت شمال (مائل) */
+/* كارت شمال */
 .bgCardLeft {
-  width: 200px;
-  height: 200px;
-  transform: rotate(-29deg) translate(-98px, -44px);
+  width: 160px;
+  height: 160px;
+  transform: rotate(-25deg) translate(-70px, -30px);
 }
 
-/* كارت يمين (مائل) */
+/* كارت يمين */
 .bgCardRight {
-  width: 200px;
-  height: 200px;
-  transform: rotate(32deg) translate(113px, -46px);
+  width: 160px;
+  height: 160px;
+  transform: rotate(28deg) translate(70px, -30px);
 }
 
-/* أيقونات جوه الكروت الزجاجية (بدل ما كانت باهتة جداً) */
+.visual:hover .bgCardLeft {
+  transform: rotate(-30deg) translate(-80px, -35px);
+}
+
+.visual:hover .bgCardRight {
+  transform: rotate(33deg) translate(80px, -35px);
+}
+
+/* الأيقونات داخل الكروت */
 .watermarkIcon {
   color: var(--color-primary);
-  opacity: 0.15; /* وضوح أكتر */
+  opacity: 0.18;
 }
 
-/* الكارت الأساسي اللي شايل الصورة */
+/* الكارت الرئيسي (الصورة) */
 .mainImageCard {
   position: relative;
   z-index: 10;
-  width: 200px;  /* كبرنا الدايرة شوية */
+  width: 200px;
   height: 200px;
-  background: #ffffff; 
-  border-radius: 50%; 
+  background: #ffffff;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* ظل داخلي وخارجي بيدي إحساس بالعمق */
-  box-shadow: 
-    0 40px 60px -15px rgba(46, 125, 50, 0.2), /* ظل أخضر احترافي */
-    inset 0 0 20px rgba(0, 0, 0, 0.03); 
+  box-shadow:
+    0 40px 60px -15px rgba(46, 125, 50, 0.25),
+    inset 0 0 20px rgba(0, 0, 0, 0.03);
+  transition: transform var(--transition-base);
 }
 
-/* الصورة جوه الدايرة */
+.visual:hover .mainImageCard {
+  transform: scale(1.03);
+}
+
 .heroImage {
-  width: 100%; /* كبرنا الصورة عشان تملأ الدايرة */
+  width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 30px; /* مسافة عشان الصورة متبقاش ملزوقة في الحواف */
-  /* ظل للصورة نفسها عشان تبان طالعة من الدايرة */
-  filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.15)); 
-  transform: scale(1.1); /* تكبير خفيف جداً للصورة */
+  padding: 30px;
+  filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.12));
+  transform: scale(1.1);
 }
 
-/* ===== Responsive ===== */
-@media (min-width: 768px) {
-  .hero {
-    padding: var(--space-16) 0;
+/* ============================================
+   Tablet (768px+)
+   ============================================ */
+
+@media (min-width: 640px) {
+  .badge {
+    font-size: var(--fs-base);
   }
 
   .title {
     font-size: var(--fs-4xl);
   }
 
+  .subtitle {
+    font-size: var(--fs-lg);
+  }
+
+  .features {
+    gap: var(--space-8);
+  }
+
+  .featureItem {
+    font-size: var(--fs-sm);
+  }
+}
+
+/* ============================================
+   Desktop (768px+)
+   ============================================ */
+
+@media (min-width: 768px) {
+  .hero {
+    padding: var(--space-16) 0;
+  }
+
   .inner {
     grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-10);
   }
 
   .visual {
-    display: flex; 
+    min-height: 450px;
+    max-width: 500px;
+  }
+
+  .bgCardLeft {
+    width: 200px;
+    height: 200px;
+    transform: rotate(-29deg) translate(-95px, -44px);
+  }
+
+  .bgCardRight {
+    width: 200px;
+    height: 200px;
+    transform: rotate(32deg) translate(110px, -46px);
+  }
+
+  .mainImageCard {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+/* ============================================
+   Large Desktop (1200px+)
+   ============================================ */
+
+@media (min-width: 1200px) {
+  .visual {
+    min-height: 500px;
+  }
+
+  .bgCardLeft {
+    width: 220px;
+    height: 220px;
+    transform: rotate(-30deg) translate(-110px, -50px);
+  }
+
+  .bgCardRight {
+    width: 220px;
+    height: 220px;
+    transform: rotate(32deg) translate(125px, -52px);
+  }
+
+  .mainImageCard {
+    width: 280px;
+    height: 280px;
+  }
+
+  .heroImage {
+    padding: 40px;
   }
 }

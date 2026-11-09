@@ -1,5 +1,6 @@
 .section {
   padding: var(--space-12) 0;
+  background-color: var(--color-bg); /* لضمان لون الخلفية */
 }
 
 .grid {
@@ -8,56 +9,77 @@
   gap: var(--space-4);
 }
 
+/* البطاقة */
 .card {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: var(--space-6);
+  padding: var(--space-6) var(--space-4);
   background-color: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   text-align: center;
   align-items: center;
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  transition: all var(--transition-base);
 }
 
+/* تأثير عند مرور الماوس */
 .card:hover {
   border-color: var(--color-primary-soft);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
 }
 
-.icon {
-  width: 56px;
-  height: 56px;
+/* حاوية الأيقونة */
+.iconWrap {
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--color-primary-soft);
+  color: var(--color-primary-dark);
   border-radius: var(--radius-full);
-  font-size: 1.75rem;
-  line-height: 1;
+  margin-bottom: var(--space-2);
+  transition: all var(--transition-base);
+}
+
+/* تغيير لون الأيقونة عند مرور الماوس على البطاقة */
+.card:hover .iconWrap {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  transform: scale(1.1) rotate(-5deg);
 }
 
 .title {
   font-size: var(--fs-lg);
+  font-weight: 700;
   color: var(--color-primary-dark);
+  margin: 0;
 }
 
 .text {
   font-size: var(--fs-sm);
   color: var(--color-text-muted);
   line-height: 1.6;
+  margin: 0;
 }
 
+/* الشاشات المتوسطة (تابلت) */
 @media (min-width: 640px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+/* الشاشات الكبيرة (ديسكتوب) */
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-6);
+  }
+  
+  .card {
+    padding: var(--space-8) var(--space-5);
   }
 }

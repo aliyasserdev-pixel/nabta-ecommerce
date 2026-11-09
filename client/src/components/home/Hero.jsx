@@ -38,16 +38,24 @@ export default function Hero() {
 
           <ul className={styles.features}>
             <li className={styles.featureItem}>
-              <PackageCheck size={30} className={styles.featureIcon} />
-              توصيل سريع
+              <PackageCheck
+                size={22}
+                strokeWidth={2}
+                className={styles.featureIcon}
+              />
+              <span>توصيل سريع</span>
             </li>
             <li className={styles.featureItem}>
-              <Leaf size={30} className={styles.featureIcon} />
-              منتجات طبيعية
+              <Leaf size={22} strokeWidth={2} className={styles.featureIcon} />
+              <span>منتجات طبيعية</span>
             </li>
             <li className={styles.featureItem}>
-              <Sprout size={30} className={styles.featureIcon} />
-              دعم زراعي
+              <Sprout
+                size={22}
+                strokeWidth={2}
+                className={styles.featureIcon}
+              />
+              <span>دعم زراعي</span>
             </li>
           </ul>
         </div>
@@ -70,11 +78,11 @@ export default function Hero() {
 
           {/* الكارت الأساسي اللي فيه الصورة (الدايرة البيضاء) */}
           <div className={styles.mainImageCard}>
-            {/* حط هنا الصورة اللي إنت عايزها، يفضل تكون PNG شفافة */}
             <img
               src="/icon-2.png"
               alt="نبتة منزلية"
               className={styles.heroImage}
+              loading="eager"
             />
           </div>
         </div>
