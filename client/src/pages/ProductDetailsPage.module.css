@@ -1,9 +1,15 @@
+/* ============================================
+   تحميل
+   ============================================ */
 .loading {
   padding: var(--space-16) 0;
   text-align: center;
   color: var(--color-text-muted);
 }
 
+/* ============================================
+   التخطيط الأساسي
+   ============================================ */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -11,6 +17,9 @@
   padding: var(--space-6) 0;
 }
 
+/* ============================================
+   معلومات المنتج
+   ============================================ */
 .title {
   font-size: var(--fs-2xl);
   color: var(--color-primary-dark);
@@ -21,6 +30,9 @@
   font-size: var(--fs-sm);
   color: var(--color-text-muted);
   margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .priceBlock {
@@ -60,10 +72,16 @@
 
 .inStock {
   color: var(--color-success);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .outStock {
   color: var(--color-danger);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .description {
@@ -81,16 +99,34 @@
   margin-bottom: var(--space-6);
 }
 
+/* ============================================
+   المميزات (أيقونات Lucide)
+   ============================================ */
 .meta {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  flex-wrap: wrap;
+  gap: var(--space-5);
   font-size: var(--fs-sm);
   color: var(--color-text-muted);
   border-top: 1px solid var(--color-border);
   padding-top: var(--space-4);
+  margin-top: var(--space-4);
 }
 
+.meta li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.meta svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   منتجات ذات صلة
+   ============================================ */
 .related {
   margin-top: var(--space-12);
   padding-top: var(--space-8);
@@ -116,7 +152,7 @@
 }
 
 /* ============================================
-   قسم الوصف
+   قسم الوصف (HTML من الأدمن)
    ============================================ */
 .descriptionSection {
   margin-top: var(--space-8);
@@ -138,7 +174,6 @@
   color: var(--color-text);
 }
 
-/* ⚠️ تنسيق الوصف المُدخل من Admin */
 .descriptionContent h2 {
   font-size: var(--fs-lg);
   font-weight: 800;
@@ -205,6 +240,9 @@
   font-size: var(--fs-sm);
 }
 
+/* ============================================
+   استجابة الشاشات (Responsive)
+   ============================================ */
 @media (min-width: 768px) {
   .grid {
     grid-template-columns: 1fr 1fr;
@@ -212,10 +250,5 @@
 
   .title {
     font-size: var(--fs-3xl);
-  }
-
-  .meta {
-    flex-direction: row;
-    gap: var(--space-6);
   }
 }

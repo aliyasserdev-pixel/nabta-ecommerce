@@ -11,6 +11,15 @@ import { productService } from "../services/productService";
 import { useCart } from "../hooks/useCart";
 import { formatPrice, getDiscountPercent } from "../utils/formatPrice";
 import styles from "./ProductDetailsPage.module.css";
+import {
+  Truck,
+  Leaf,
+  MessageCircle,
+  Star,
+  CheckCircle2,
+  XCircle,
+  Loader2,
+} from "lucide-react";
 
 export default function ProductDetailsPage() {
   const { slug } = useParams();
@@ -57,7 +66,18 @@ export default function ProductDetailsPage() {
   if (loading) {
     return (
       <Container>
-        <div className={styles.loading}>⏳ جاري تحميل المنتج...</div>
+        <div
+          className={styles.loading}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
+          }}
+        >
+          <Loader2 size={24} className="lucide-spin" />
+          جاري تحميل المنتج...
+        </div>
       </Container>
     );
   }
@@ -98,7 +118,13 @@ export default function ProductDetailsPage() {
           <div className={styles.infoCol}>
             <h1 className={styles.title}>{product.name}</h1>
 
-            <div className={styles.rating}>⭐ {product.rating} / 5</div>
+            <div
+              className={styles.rating}
+              style={{ display: "flex", alignItems: "center", gap: "4px" }}
+            >
+              <Star size={16} fill="#e9c46a" color="#e9c46a" />
+              {product.rating} / 5
+            </div>
 
             <div className={styles.priceBlock}>
               <span className={styles.price}>{formatPrice(product.price)}</span>
@@ -114,11 +140,29 @@ export default function ProductDetailsPage() {
 
             <div className={styles.stock}>
               {inStock ? (
-                <span className={styles.inStock}>
-                  ✅ متوفر ({product.stock} قطعة)
+                <span
+                  className={styles.inStock}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  <CheckCircle2 size={16} />
+                  متوفر ({product.stock} قطعة)
                 </span>
               ) : (
-                <span className={styles.outStock}>❌ غير متوفر حاليًا</span>
+                <span
+                  className={styles.outStock}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  <XCircle size={16} />
+                  غير متوفر حاليًا
+                </span>
               )}
             </div>
 
@@ -168,9 +212,18 @@ export default function ProductDetailsPage() {
             )}
 
             <ul className={styles.meta}>
-              <li>🚚 توصيل سريع</li>
-              <li>🌱 منتج أصلي</li>
-              <li>💬 دعم زراعي</li>
+              <li>
+                <Truck size={20} strokeWidth={2} />
+                توصيل سريع
+              </li>
+              <li>
+                <Leaf size={20} strokeWidth={2} />
+                منتج أصلي
+              </li>
+              <li>
+                <MessageCircle size={20} strokeWidth={2} />
+                دعم زراعي
+              </li>
             </ul>
           </div>
         </div>
