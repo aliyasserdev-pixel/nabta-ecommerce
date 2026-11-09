@@ -74,6 +74,9 @@
   color: var(--color-primary);
   font-weight: 600;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .viewAll:hover {

@@ -5,6 +5,16 @@ import OrderStatusBadge from "./OrderStatusBadge";
 import { adminService } from "../../services/adminService";
 import { formatPrice } from "../../utils/formatPrice";
 import styles from "./AdminDashboardPage.module.css";
+import {
+  Package,
+  Clock,
+  CheckCircle2,
+  Sprout,
+  Users,
+  AlertTriangle,
+  Loader2,
+  AlertCircle,
+} from "lucide-react";
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState(null);
@@ -24,14 +34,37 @@ export default function AdminDashboardPage() {
 
   if (loading) {
     return (
-      <p style={{ textAlign: "center", padding: "3rem" }}>⏳ جاري التحميل...</p>
+      <p
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "8px",
+          textAlign: "center",
+          padding: "3rem",
+        }}
+      >
+        <Loader2 size={24} className="lucide-spin" />
+        جاري التحميل...
+      </p>
     );
   }
 
   if (error) {
     return (
-      <p style={{ color: "red", textAlign: "center", padding: "3rem" }}>
-        ⚠️ {error}
+      <p
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "8px",
+          color: "var(--color-danger)",
+          textAlign: "center",
+          padding: "3rem",
+        }}
+      >
+        <AlertCircle size={24} />
+        {error}
       </p>
     );
   }
@@ -45,37 +78,37 @@ export default function AdminDashboardPage() {
 
       <div className={styles.statsGrid}>
         <StatCard
-          icon="📦"
+          icon={<Package size={28} />}
           label="إجمالي الطلبات"
           value={stats.totalOrders}
           color="primary"
         />
         <StatCard
-          icon="⏳"
+          icon={<Clock size={28} />}
           label="طلبات قيد المراجعة"
           value={stats.pendingOrders}
           color="warning"
         />
         <StatCard
-          icon="✅"
+          icon={<CheckCircle2 size={28} />}
           label="طلبات مُسلّمة"
           value={stats.deliveredOrders}
           color="success"
         />
         <StatCard
-          icon="🌱"
+          icon={<Sprout size={28} />}
           label="منتجات نشطة"
           value={stats.totalProducts}
           color="info"
         />
         <StatCard
-          icon="👥"
+          icon={<Users size={28} />}
           label="مستخدمون"
           value={stats.totalUsers}
           color="info"
         />
         <StatCard
-          icon="⚠️"
+          icon={<AlertTriangle size={28} />}
           label="مخزون منخفض"
           value={stats.lowStockCount}
           color="danger"
@@ -95,7 +128,7 @@ export default function AdminDashboardPage() {
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>آخر الطلبات</h2>
           <Link to="/admin/orders" className={styles.viewAll}>
-            عرض الكل →
+            عرض الكل ←
           </Link>
         </div>
 
