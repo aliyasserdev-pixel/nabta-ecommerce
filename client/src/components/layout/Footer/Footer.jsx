@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import Container from "../../common/Container";
-import Logo from "../../common/Logo";
 import { ar } from "../../../locales/ar";
 import styles from "./Footer.module.css";
+import { MapPin, Phone, Mail, Facebook } from "lucide-react"; // أيقونات احترافية
 
-// روابط الفوتر (سنوسّعها لاحقًا مع الصفحات الجديدة)
+// روابط الفوتر
 const SHOP_LINKS = [
   { to: "/products", label: "كل المنتجات" },
   { to: "/categories/seeds", label: "بذور" },
@@ -25,9 +25,8 @@ const SOCIAL_LINKS = [
   {
     href: "https://www.facebook.com/profile.php?id=61595074895012",
     label: "فيسبوك",
+    Icon: Facebook,
   },
-  // { href: "https://instagram.com", label: "إنستغرام" },
-  // { href: "https://twitter.com", label: "تويتر" },
 ];
 
 export default function Footer() {
@@ -37,9 +36,11 @@ export default function Footer() {
     <footer className={styles.footer}>
       <Container>
         <div className={styles.grid}>
-          {/* العمود 1: عن المتجر */}
+          {/* العمود 1: عن المتجر + اللوجو */}
           <div className={styles.col}>
-            <Logo variant="light" />
+            <Link to="/" className={styles.footerLogoWrap}>
+              <img src="/logo.png" alt="نبتة" className={styles.footerLogo} />
+            </Link>
             <p className={styles.about}>{ar.footer.aboutText}</p>
           </div>
 
@@ -76,16 +77,22 @@ export default function Footer() {
             <h3 className={styles.title}>{ar.footer.contactTitle}</h3>
             <ul className={styles.list}>
               <li className={styles.contactItem}>
-                <span className={styles.contactLabel}>العنوان:</span>
-                <span>السودان — الخرطوم</span>
+                <div className={styles.contactRow}>
+                  <MapPin size={16} className={styles.contactIcon} />
+                  <span>السودان — الخرطوم</span>
+                </div>
               </li>
               <li className={styles.contactItem}>
-                <span className={styles.contactLabel}>الهاتف:</span>
-                <span dir="ltr">+249 128 742 152</span>
+                <div className={styles.contactRow}>
+                  <Phone size={16} className={styles.contactIcon} />
+                  <span dir="ltr">+249 128 742 152</span>
+                </div>
               </li>
               <li className={styles.contactItem}>
-                <span className={styles.contactLabel}>البريد:</span>
-                <span dir="ltr">nabta.store.sd1@gmail.com</span>
+                <div className={styles.contactRow}>
+                  <Mail size={16} className={styles.contactIcon} />
+                  <span dir="ltr">nabta.store.sd1@gmail.com</span>
+                </div>
               </li>
             </ul>
 
@@ -98,6 +105,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className={styles.socialLink}
                 >
+                  <social.Icon size={16} />
                   {social.label}
                 </a>
               ))}

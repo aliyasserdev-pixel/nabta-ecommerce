@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Container from "../common/Container";
 import Button from "../common/Button";
+import { Sprout } from "lucide-react";
 import styles from "./HomeGardenBanner.module.css";
 
 export default function HomeGardenBanner() {
@@ -9,7 +10,10 @@ export default function HomeGardenBanner() {
       <Container>
         <div className={styles.banner}>
           <div className={styles.content}>
-            <span className={styles.tag}>🌱 الزراعة المنزلية</span>
+            <span className={styles.tag}>
+              <Sprout size={16} strokeWidth={2.5} />
+              الزراعة المنزلية
+            </span>
             <h2 className={styles.title}>
               ابدأ حديقتك المنزلية حتى في مساحة صغيرة
             </h2>
@@ -24,8 +28,13 @@ export default function HomeGardenBanner() {
             </Link>
           </div>
 
+          {/* هنا وضعنا صورة الأصيص الحقيقية بدلاً من الإيموجي */}
           <div className={styles.visual} aria-hidden="true">
-            <span className={styles.bigEmoji}>🪴</span>
+            <img
+              src="/Nabta2.jpeg"
+              alt="أصيص نبات"
+              className={styles.bannerImage}
+            />
           </div>
         </div>
       </Container>
