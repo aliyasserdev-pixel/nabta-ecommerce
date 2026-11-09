@@ -17,14 +17,17 @@
 }
 
 .badge {
-  display: inline-block;
-  align-self: flex-start;
-  background-color: var(--color-primary-soft);
-  color: var(--color-primary-dark);
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badgeIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  flex-shrink: 0;
 }
 
 .title {
@@ -53,54 +56,110 @@
   gap: var(--space-3);
 }
 
+/* القائمة: العناصر جنب بعض ومتوسطة */
 .features {
-  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;          /* مسافة فوق وتحت */
+  display: inline-flex;    /* يخلي العرض على قد المحتوى */
+  gap: 40px;
   flex-wrap: wrap;
-  gap: var(--space-4);
-  margin-top: var(--space-2);
-  font-size: var(--fs-sm);
-  color: var(--color-text-muted);
+}
+/* كل عنصر: أيقونة فوق ونص تحت، ومتوسط */
+.featureItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+/* الأيقونة: لون ومقاس ثابت */
+.featureIcon {
+  color: #2e7d32;
+  flex-shrink: 0;
+  stroke-width: 1.8; /* لو حابب تخليها أرفع شوية زي الصورة */
 }
 
 /* الجزء البصري */
 .visual {
   position: relative;
-  min-height: 320px;
+  min-height: 450px;
   display: none;
+  align-items: center;
+  justify-content: center;
 }
 
-.plantCard {
+/* =========================================
+   الجزء البصري (تحديث احترافي - 3D Style)
+========================================= */
+
+/* الكروت الزجاجية اللي في الخلف */
+.glassCard {
   position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 240px;
-  height: 240px;
-  background-color: #ffffff;
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.6); /* أبيض شفاف */
+  backdrop-filter: blur(12px); 
+  /* السر هنا: الإطار الملون اللي بيدي إحساس إنه كارت شفاف */
+  border: 2px solid rgba(255, 255, 255, 0.9); 
+  border-radius: 40px; 
+  box-shadow: 
+    0 20px 40px rgba(46, 125, 50, 0.08), /* ظل أخضر خفيف جداً */
+    inset 0 0 0 1px rgba(46, 125, 50, 0.1); /* إطار داخلي أخضر باهت */
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-lg);
-  transform: rotate(-6deg);
+  z-index: 1;
+  transition: transform 0.3s ease;
 }
 
-.card2 {
+/* كارت شمال (مائل) */
+.bgCardLeft {
   width: 200px;
   height: 200px;
-  transform: translate(70px, 60px) rotate(8deg);
-  background-color: var(--color-primary-soft);
+  transform: rotate(-29deg) translate(-98px, -44px);
 }
 
-.card3 {
-  width: 160px;
-  height: 160px;
-  transform: translate(-80px, -50px) rotate(-12deg);
-  background-color: #fef3c7;
+/* كارت يمين (مائل) */
+.bgCardRight {
+  width: 200px;
+  height: 200px;
+  transform: rotate(32deg) translate(113px, -46px);
 }
 
-.plantEmoji {
-  font-size: 6rem;
-  line-height: 1;
+/* أيقونات جوه الكروت الزجاجية (بدل ما كانت باهتة جداً) */
+.watermarkIcon {
+  color: var(--color-primary);
+  opacity: 0.15; /* وضوح أكتر */
+}
+
+/* الكارت الأساسي اللي شايل الصورة */
+.mainImageCard {
+  position: relative;
+  z-index: 10;
+  width: 200px;  /* كبرنا الدايرة شوية */
+  height: 200px;
+  background: #ffffff; 
+  border-radius: 50%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* ظل داخلي وخارجي بيدي إحساس بالعمق */
+  box-shadow: 
+    0 40px 60px -15px rgba(46, 125, 50, 0.2), /* ظل أخضر احترافي */
+    inset 0 0 20px rgba(0, 0, 0, 0.03); 
+}
+
+/* الصورة جوه الدايرة */
+.heroImage {
+  width: 100%; /* كبرنا الصورة عشان تملأ الدايرة */
+  height: 100%;
+  object-fit: contain;
+  padding: 30px; /* مسافة عشان الصورة متبقاش ملزوقة في الحواف */
+  /* ظل للصورة نفسها عشان تبان طالعة من الدايرة */
+  filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.15)); 
+  transform: scale(1.1); /* تكبير خفيف جداً للصورة */
 }
 
 /* ===== Responsive ===== */
@@ -118,6 +177,6 @@
   }
 
   .visual {
-    display: block;
+    display: flex; 
   }
 }

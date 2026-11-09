@@ -1,16 +1,17 @@
 import Container from "../common/Container";
 import SectionTitle from "../common/SectionTitle";
 import styles from "./WhyNabta.module.css";
+import { PackageCheck, Leaf, Sprout } from "lucide-react";
 
 // مميزات المتجر — نصوص ثابتة
 const FEATURES = [
   {
-    icon: "🚚",
+    iconName: "PackageCheck",
     title: "توصيل سريع",
     text: "نوصل طلبك لباب منزلك في أسرع وقت.",
   },
   {
-    icon: "🌿",
+    icon: <img src="/icon-1.png" alt="" />,
     title: "منتجات طبيعية",
     text: "بذور وشتول مختارة بعناية من مصادر موثوقة.",
   },

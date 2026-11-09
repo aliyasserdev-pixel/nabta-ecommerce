@@ -22,9 +22,12 @@ const IMPORTANT_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { href: "https://facebook.com", label: "فيسبوك" },
-  { href: "https://instagram.com", label: "إنستغرام" },
-  { href: "https://twitter.com", label: "تويتر" },
+  {
+    href: "https://www.facebook.com/profile.php?id=61595074895012",
+    label: "فيسبوك",
+  },
+  // { href: "https://instagram.com", label: "إنستغرام" },
+  // { href: "https://twitter.com", label: "تويتر" },
 ];
 
 export default function Footer() {
@@ -78,11 +81,11 @@ export default function Footer() {
               </li>
               <li className={styles.contactItem}>
                 <span className={styles.contactLabel}>الهاتف:</span>
-                <span dir="ltr">+249 000 000 000</span>
+                <span dir="ltr">+249 128 742 152</span>
               </li>
               <li className={styles.contactItem}>
                 <span className={styles.contactLabel}>البريد:</span>
-                <span dir="ltr">info@nabta.com</span>
+                <span dir="ltr">nabta.store.sd1@gmail.com</span>
               </li>
             </ul>
 

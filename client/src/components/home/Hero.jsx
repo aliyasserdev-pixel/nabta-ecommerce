@@ -2,13 +2,17 @@ import { Link } from "react-router-dom";
 import Container from "../common/Container";
 import Button from "../common/Button";
 import styles from "./Hero.module.css";
+import { PackageCheck, Leaf, Sprout } from "lucide-react";
 
 export default function Hero() {
   return (
     <section className={styles.hero}>
       <Container className={styles.inner}>
         <div className={styles.content}>
-          <span className={styles.badge}>🌱 الزراعة المنزلية صارت أسهل</span>
+          <span className={styles.badge}>
+            <img src="/favicon.ico" alt="" className={styles.badgeIcon} />
+            الزراعة المنزلية صارت أسهل
+          </span>
 
           <h1 className={styles.title}>
             كل ما تحتاجه لـ
@@ -33,21 +37,45 @@ export default function Hero() {
           </div>
 
           <ul className={styles.features}>
-            <li>✅ توصيل سريع</li>
-            <li>✅ منتجات طبيعية</li>
-            <li>✅ دعم زراعي</li>
+            <li className={styles.featureItem}>
+              <PackageCheck size={30} className={styles.featureIcon} />
+              توصيل سريع
+            </li>
+            <li className={styles.featureItem}>
+              <Leaf size={30} className={styles.featureIcon} />
+              منتجات طبيعية
+            </li>
+            <li className={styles.featureItem}>
+              <Sprout size={30} className={styles.featureIcon} />
+              دعم زراعي
+            </li>
           </ul>
         </div>
 
+        {/* التصميم الاحترافي الجديد للكروت */}
         <div className={styles.visual} aria-hidden="true">
-          <div className={styles.plantCard}>
-            <span className={styles.plantEmoji}>🌿</span>
+          {/* كارت خلفي شمال */}
+          <div className={`${styles.glassCard} ${styles.bgCardLeft}`}>
+            <Leaf size={80} strokeWidth={1} className={styles.watermarkIcon} />
           </div>
-          <div className={`${styles.plantCard} ${styles.card2}`}>
-            <span className={styles.plantEmoji}>🌱</span>
+
+          {/* كارت خلفي يمين */}
+          <div className={`${styles.glassCard} ${styles.bgCardRight}`}>
+            <Sprout
+              size={80}
+              strokeWidth={1}
+              className={styles.watermarkIcon}
+            />
           </div>
-          <div className={`${styles.plantCard} ${styles.card3}`}>
-            <span className={styles.plantEmoji}>🪴</span>
+
+          {/* الكارت الأساسي اللي فيه الصورة (الدايرة البيضاء) */}
+          <div className={styles.mainImageCard}>
+            {/* حط هنا الصورة اللي إنت عايزها، يفضل تكون PNG شفافة */}
+            <img
+              src="/icon-2.png"
+              alt="نبتة منزلية"
+              className={styles.heroImage}
+            />
           </div>
         </div>
       </Container>

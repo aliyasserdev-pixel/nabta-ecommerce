@@ -6,7 +6,7 @@ export const categories = [
     slug: "seedlings",
     name: "شتول",
     description: "شتول جاهزة للزراعة",
-    icon: "🌿",
+    iconName: "Sprout", // غيرناها من 🌿
     color: "#d8f3dc",
   },
   {
@@ -14,7 +14,7 @@ export const categories = [
     slug: "seeds",
     name: "بذور",
     description: "بذور متنوعة عالية الجودة",
-    icon: "🌱",
+    iconName: "Leaf", // غيرناها من 🌱
     color: "#fef3c7",
   },
   {
@@ -22,7 +22,7 @@ export const categories = [
     slug: "soil",
     name: "تربة",
     description: "تربة معدة للزراعة المنزلية",
-    icon: "🪴",
+    iconName: "Flower2", // غيرناها من 🪴
     color: "#e0e7ff",
   },
   {
@@ -30,7 +30,7 @@ export const categories = [
     slug: "fertilizers",
     name: "أسمدة",
     description: "أسمدة عضوية وآمنة",
-    icon: "💧",
+    iconName: "Droplets", // غيرناها من 💧
     color: "#cffafe",
   },
   {
@@ -38,7 +38,7 @@ export const categories = [
     slug: "tools",
     name: "أدوات",
     description: "أدوات زراعة منزلية",
-    icon: "🛠️",
+    iconName: "Wrench", // غيرناها من 🛠️
     color: "#fce7f3",
   },
   {
@@ -46,7 +46,7 @@ export const categories = [
     slug: "pots",
     name: "أصص",
     description: "أصص وأوعية زراعة",
-    icon: "🏺",
+    iconName: "Flower", // أو "Amphora" لو موجودة في النسخة بتاعتك، غيرناها من 🏺
     color: "#fed7aa",
   },
 ];
