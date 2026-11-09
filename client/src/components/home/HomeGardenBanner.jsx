@@ -30,10 +30,11 @@ export default function HomeGardenBanner() {
 
           {/* هنا وضعنا صورة الأصيص الحقيقية بدلاً من الإيموجي */}
           <div className={styles.visual} aria-hidden="true">
-            <img
-              src="/Nabta2.jpeg"
-              alt="أصيص نبات"
+            <Sprout
+              size={160}
+              strokeWidth={1}
               className={styles.bannerImage}
+              style={{ color: "var(--color-primary-dark)" }}
             />
           </div>
         </div>
