@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { LayoutDashboard, Package, Sprout, Users, X } from "lucide-react";
 import styles from "./AdminSidebar.module.css";
 
 export default function AdminSidebar({ isOpen, onClose }) {
@@ -7,11 +8,11 @@ export default function AdminSidebar({ isOpen, onClose }) {
   const isAdmin = user?.role === "ADMIN";
 
   const links = [
-    { to: "/admin", label: "لوحة التحكم", icon: "📊", end: true },
-    { to: "/admin/orders", label: "الطلبات", icon: "📦" },
-    { to: "/admin/products", label: "المنتجات", icon: "🌱" },
+    { to: "/admin", label: "لوحة التحكم", Icon: LayoutDashboard, end: true },
+    { to: "/admin/orders", label: "الطلبات", Icon: Package },
+    { to: "/admin/products", label: "المنتجات", Icon: Sprout },
     ...(isAdmin
-      ? [{ to: "/admin/users", label: "المستخدمون", icon: "👥" }]
+      ? [{ to: "/admin/users", label: "المستخدمون", Icon: Users }]
       : []),
   ];
 
@@ -25,13 +26,17 @@ export default function AdminSidebar({ isOpen, onClose }) {
 
       <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
         <div className={styles.header}>
-          <span className={styles.brand}>🌱 نبتة Admin</span>
+          {/* تحديث اسم اللوجو ليطابق ملفك */}
+          <span className={styles.brand}>
+            <img src="/logo.png" alt="نبتة" className={styles.brandLogo} />
+            Admin
+          </span>
           <button
             className={styles.closeBtn}
             onClick={onClose}
             aria-label="إغلاق"
           >
-            ✕
+            <X size={24} />
           </button>
         </div>
 
@@ -46,7 +51,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
               }
               onClick={onClose}
             >
-              <span className={styles.icon}>{link.icon}</span>
+              <link.Icon size={20} strokeWidth={2} className={styles.icon} />
               <span>{link.label}</span>
             </NavLink>
           ))}
