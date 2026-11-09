@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 import Container from "../../common/Container";
 import { ar } from "../../../locales/ar";
 import styles from "./Footer.module.css";
-import { MapPin, Phone, Mail, Facebook } from "lucide-react"; // أيقونات احترافية
+import { MapPin, Phone, Mail, Share2 } from "lucide-react";
 
-// روابط الفوتر
 const SHOP_LINKS = [
   { to: "/products", label: "كل المنتجات" },
   { to: "/categories/seeds", label: "بذور" },
@@ -25,7 +24,7 @@ const SOCIAL_LINKS = [
   {
     href: "https://www.facebook.com/profile.php?id=61595074895012",
     label: "فيسبوك",
-    Icon: Facebook,
+    Icon: Share2,
   },
 ];
 
@@ -36,7 +35,6 @@ export default function Footer() {
     <footer className={styles.footer}>
       <Container>
         <div className={styles.grid}>
-          {/* العمود 1: عن المتجر + اللوجو */}
           <div className={styles.col}>
             <Link to="/" className={styles.footerLogoWrap}>
               <img src="/logo.png" alt="نبتة" className={styles.footerLogo} />
@@ -44,7 +42,6 @@ export default function Footer() {
             <p className={styles.about}>{ar.footer.aboutText}</p>
           </div>
 
-          {/* العمود 2: المتجر */}
           <div className={styles.col}>
             <h3 className={styles.title}>{ar.footer.shopTitle}</h3>
             <ul className={styles.list}>
@@ -58,7 +55,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* العمود 3: روابط مهمة */}
           <div className={styles.col}>
             <h3 className={styles.title}>{ar.footer.importantTitle}</h3>
             <ul className={styles.list}>
@@ -72,7 +68,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* العمود 4: التواصل */}
           <div className={styles.col}>
             <h3 className={styles.title}>{ar.footer.contactTitle}</h3>
             <ul className={styles.list}>
